@@ -1,0 +1,1 @@
+LIB = $(PWD)/../platforms/$(WM_OPTIONS)/lib/libablation_16d52fe211ae612e36593e88edd61121fc739bef

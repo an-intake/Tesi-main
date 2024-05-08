@@ -1,0 +1,69 @@
+#!/bin/bash
+
+# Define the folder to enter
+folder_to_enter="/home/grani/PATO/Tests/test"
+# Define the command to be executed inside the folder
+command_to_run="heatTransfer"
+# Define the base name of the new folders to be created
+new_folder_base="test_"
+# Define the number of times to repeat the process
+n=5
+# Define the path of the text file to modify
+text_file_path="/home/grani/PATO/Tests/test/constant/solidProperties"
+# Define the pattern to search for
+pattern="(1 0 0 0 1 0 0 0 1)"
+# Define the vector of values to cycle through for substitution
+vector=("(0.19071852903638015 0 0 0 0.41382714820705124 0 0 0 0.3954543227565686)" "(0.21495228309042036 0 0 0 0.15075830291132444 0 0 0 0.6342894139982552)" "(0.05717420972188564 0 0 0 0.6912986146916473 0 0 0 0.25152717558646703)")
+
+
+# Ensure the parent directory has appropriate permissions
+parent_directory="/home/grani/PATO/Tests"
+if [ ! -d "$parent_directory" ]; then
+    echo "Parent directory $parent_directory does not exist."
+    exit 1
+fi
+
+# Check if the parent directory is writable
+if [ ! -w "$parent_directory" ]; then
+    echo "You do not have write permission in the parent directory $parent_directory."
+    exit 1
+fi
+
+# Loop to repeat the process 'n' times
+for ((i = 1; i <= n; i++)); do
+    echo "Iteration $i:"
+    
+    # Define the new folder name
+    new_folder_name="${new_folder_base}${i}"
+
+    # Copy contents of the reference folder to the new folder
+    cp -r "$folder_to_enter" "$parent_directory/$new_folder_name" || { echo "Error: Failed to copy contents from $folder_to_enter to $new_folder_name"; exit 1; }
+    echo "Contents of $folder_to_enter copied to $parent_directory/$new_folder_name."
+
+    # Enter the new folder
+    cd "$parent_directory/$new_folder_name" || { echo "Error: Failed to enter directory $parent_directory/$new_folder_name"; exit 1; }
+
+    # Update the text file path to point to the file in the current folder
+    text_file_name=$(basename "$text_file_path")
+    text_file_path="./$text_file_name"
+
+    # Execute the command inside the new folder
+   # echo "Executing command '$command_to_run' inside $parent_directory/$new_folder_name:"
+   # $command_to_run
+
+    # Cycle through the vector and perform substitutions
+    vector_index=$(( (i - 1) % ${#vector[@]} ))
+    replacement_value="${vector[$vector_index]}"
+    if grep -q "$pattern" "$text_file_path"; then
+        sed -i "s/$pattern/$replacement_value/g" "$text_file_path" || { echo "Error: Failed to change pattern in $text_file_path"; exit 1; }
+        echo "Pattern '$pattern' replaced with '$replacement_value' in $text_file_path."
+    else
+        echo "Pattern '$pattern' not found in $text_file_path."
+    fi
+
+    echo ""
+done
+
+echo "Script executed successfully."
+
+
