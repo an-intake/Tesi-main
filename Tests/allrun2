@@ -31,7 +31,6 @@ fi
 
 # Loop to repeat the process 'n' times
 for ((i = 1; i <= n; i++)); do
-    echo "Iteration $i:"
     
     # Define the new folder name
     new_folder_name="${new_folder_base}${i}"
@@ -46,8 +45,6 @@ for ((i = 1; i <= n; i++)); do
     # Update the text file path to point to the file in the current folder
     text_file_name=$(basename "$text_file_path")
     text_file_path="./$text_file_name"
-
-    # Execute the command inside the new folder
    # echo "Executing command '$command_to_run' inside $parent_directory/$new_folder_name:"
    # $command_to_run
 
@@ -65,5 +62,8 @@ for ((i = 1; i <= n; i++)); do
 done
 
 echo "Script executed successfully."
+
+
+
 
 
