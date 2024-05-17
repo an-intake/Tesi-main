@@ -69,3 +69,23 @@ Surface Loop(1) = {1, 2, 3, 5, 6, 4};
 //+
 Volume(1) = {1};
 //+
+//+
+Transfinite Curve {5, 11, 9, 7} = 50 Using Progression 1;
+//+
+Transfinite Curve {6, 12, 13, 10, 1, 4, 2, 3} = 15 Using Progression 1;
+//+
+Transfinite Surface {1} = {7, 6, 1, 2};
+//+
+Transfinite Surface {2} = {7, 2, 3, 8};
+//+
+Transfinite Surface {5} = {8, 5, 4, 3};
+//+
+Transfinite Surface {6} = {6, 1, 4, 5};
+//+
+Transfinite Surface {3} = {6, 7, 8, 5};
+//+
+Transfinite Surface {4} = {1, 2, 3, 4};
+//+
+Recombine Surface {1, 2, 5, 3, 6, 4};
+//+
+Transfinite Volume{1};
