@@ -1,4 +1,3 @@
-//+
 Point(1) = {0, 0, 0, 1.0};
 //+
 Point(2) = {0, 1, 0, 1.0};
@@ -88,3 +87,7 @@ Transfinite Surface {3} = {6, 7, 8, 5};
 Transfinite Volume{1};
 //+
 Recombine Surface {1, 6, 5, 2, 4, 3};
+//+
+Physical Surface("conv", 14) = {3};
+//+
+Physical Surface("adiabatic", 15) = {1, 6, 4, 2, 5};
